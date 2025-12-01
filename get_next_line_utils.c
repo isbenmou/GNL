@@ -1,65 +1,54 @@
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+size_t  ft_strlen(const char *s)
 {
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (NULL);
+    size_t i = 0;
+
+    if (!s)
+        return 0;
+    while (s[i])
+        i++;
+    return i;
 }
 
-char	*ft_strdup(const char *s)
+void    *ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int		len = 0;
-	char	*dup;
+    size_t i;
 
-	while (s[len])
-		len++;
-	dup = malloc(len + 1);
-	if (!dup)
-		return (NULL);
-	for (int i = 0; i < len; i++)
-		dup[i] = s[i];
-	dup[len] = '\0';
-	return (dup);
+    if (!dst && !src)
+        return NULL;
+    i = 0;
+    while (i < n)
+    {
+        ((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+        i++;
+    }
+    return dst;
 }
 
-size_t	ft_strlen(const char *s)
+char    *ft_strdup(const char *s)
 {
-	size_t	i = 0;
-	while (s && s[i])
-		i++;
-	return (i);
+    size_t len = ft_strlen(s);
+    char   *dup = malloc(len + 1);
+
+    if (!dup)
+        return NULL;
+    ft_memcpy(dup, s, len);
+    dup[len] = '\0';
+    return dup;
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char    *ft_strchr(const char *s, int c)
 {
-	size_t	len1 = ft_strlen(s1);
-	size_t	len2 = ft_strlen(s2);
-	char	*new;
-	size_t	i = 0;
-	size_t	j = 0;
-
-	new = malloc(len1 + len2 + 1);
-	if (!new)
-		return (NULL);
-	while (i < len1)
-	{
-		new[i] = s1[i];
-		i++;
-	}
-	while (j < len2)
-	{
-		new[i + j] = s2[j];
-		j++;
-	}
-	new[i + j] = '\0';
-	return (new);
+    if (!s)
+        return NULL;
+    while (*s)
+    {
+        if (*s == (char)c)
+            return ((char *)s);
+        s++;
+    }
+    if (c == '\0')
+        return ((char *)s);
+    return NULL;
 }
